@@ -1,0 +1,61 @@
+name: 'Execução Manual - Testes API'
+
+on:
+  workflow_dispatch:
+
+jobs:
+  api-tests:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout do código
+        uses: actions/checkout@v4
+
+      - name: Instalando Yarn
+        run:  npm i -g yarn
+
+      name: Cypress Tests
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  cypress-run:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16' # Especifique a versão do Node.js desejada
+
+      - name: Install dependencies
+        run: |
+          yarn install
+
+      - name: Install Cypress
+        run: |
+          yarn add --dev cypress
+
+      - name: Run Cypress tests
+        run: |
+          npx cypress run
+        env:
+          # Variável necessária para evitar erros no GitHub Actions com o Cypress
+          CYPRESS_INSTALL_BINARY: 0
+
+
+      - name: Upload do relatório de testes
+        if: success()
+        uses: actions/upload-artifact@v4
+        with:
+          name: relatorio-de-testes
+          path: ./test-report
