@@ -1,33 +1,11 @@
-name: 'Execução Manual - Testes API'
+name: 'Execução Manual - Testes Web Cypress'
 
-on:
+on :
   workflow_dispatch:
 
 jobs:
-  api-tests:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout do código
-        uses: actions/checkout@v4
-
-      - name: Instalando Yarn
-        run:  npm i -g yarn
-
-      name: Cypress Tests
-
-on:
-  push:
-    branches:
-      - main
-  pull_request:
-    branches:
-      - main
-
-jobs:
-  cypress-run:
-    runs-on: ubuntu-latest
-
+  e2e-cypress-run-tests:
+    runs-on: ['ubuntu-latest']
     steps:
       - name: Checkout code
         uses: actions/checkout@v2

@@ -1,6 +1,6 @@
-#nome da ppipe
-name: 'execucao deploy'
-#trigger gatilho de execucao
+
+name: 'Execução Deploy - Testes Web Cypress'
+
 on :
   workflow_run:
     workflows: [ 'execucao manual']
@@ -8,12 +8,12 @@ on :
       - completed
 
 jobs:
-#descricao job
+
   e2e-tests:
-  #descricao maquin
+  
     runs-on: ['ubuntu-latest']
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
-    #passp a passo
+  
     steps:  
     - uses: actions/checkout@v4
 
@@ -32,11 +32,16 @@ jobs:
     - name: Run Cypress tests
       run: npx cypress run
 
-    - uses: actions/upload-artifact@v4
-      if: ${{ !cancelled() }}
+      env:
+        # Variável necessária para evitar erros no GitHub Actions com o Cypress
+        CYPRESS_INSTALL_BINARY: 0
+
+    - name: Upload do relatório de testes
+      if: success()
+      uses: actions/upload-artifact@v4
       with:
-        name: relatorio de testes
-        path: ./playwright-report  
+        name: relatorio-de-testes
+        path: ./test-report
 
 
 

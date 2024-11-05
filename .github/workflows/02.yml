@@ -1,17 +1,16 @@
-#nome da ppipe
-name: 'execucao agendada'
-#trigger gatilho de execucao
+
+name: 'Execução Agendada - Testes Web Cypress'
+
 on:
   schedule:
     - cron: "30 19 * * *"
 
-
 jobs:
-#descricao job
+
   e2e-tests:
-  #descricao maquin
+
     runs-on: ubuntu-latest
-    #passp a passo
+
     steps:  
     - uses: actions/checkout@v4
 
@@ -26,15 +25,20 @@ jobs:
 
     - name: Run Cypress tests
       run: npx cypress run
-      
+
     - name: Run Cypress tests
       run: npx cypress run
 
-    - uses: actions/upload-artifact@v4
-      if: ${{ !cancelled() }}
+      env:
+        # Variável necessária para evitar erros no GitHub Actions com o Cypress
+        CYPRESS_INSTALL_BINARY: 0
+
+    - name: Upload do relatório de testes
+      if: success()
+      uses: actions/upload-artifact@v4
       with:
-        name: relatorio de testes
-        path: ./playwright-report  
+        name: relatorio-de-testes
+        path: ./test-report
 
 
 
