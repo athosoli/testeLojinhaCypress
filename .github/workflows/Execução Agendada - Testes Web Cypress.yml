@@ -24,14 +24,19 @@ jobs:
       run: yarn add --dev cypress
 
     - name: Run Cypress tests
-      run: |
-        npx cypress run --reporter junit --reporter-options "mochaFile=./test-report/results-[hash].xml"
+      run: npx cypress run
+
       env:
         CYPRESS_INSTALL_BINARY: 0
 
     - name: Upload do relatório de testes
-      if: ${{ success() }}
+      if: success()
       uses: actions/upload-artifact@v4
       with:
         name: relatorio-de-testes
         path: ./test-report
+
+
+
+
+

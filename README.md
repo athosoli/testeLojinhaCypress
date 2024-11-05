@@ -12,4 +12,7 @@ GitActions: 🎨
 
 Para executalo primeiro instale o node 
 execute o comando npm init -y para inicar o packger.json
-execute o comando npm i para instalar as dependencias
+execute o comando npm i -g yarn para instalar as dependencias
+execute o comando yarn install para instalar o yarn
+execute o comando yarn add --dev cypress para adicionar o cypress
+execute o comando npx cypress run para executar os testes
