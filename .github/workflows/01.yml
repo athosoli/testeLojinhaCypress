@@ -38,20 +38,17 @@ jobs:
           node-version: '16' # Especifique a versão do Node.js desejada
 
       - name: Install dependencies
-        run: |
-          yarn install
+        run: yarn install
 
       - name: Install Cypress
-        run: |
-          yarn add --dev cypress
+        run: yarn add --dev cypress
 
       - name: Run Cypress tests
-        run: |
-          npx cypress run
+        run: npx cypress run
+
         env:
           # Variável necessária para evitar erros no GitHub Actions com o Cypress
           CYPRESS_INSTALL_BINARY: 0
-
 
       - name: Upload do relatório de testes
         if: success()

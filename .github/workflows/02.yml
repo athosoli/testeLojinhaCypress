@@ -18,17 +18,18 @@ jobs:
     - name: Instalando yarn
       run: npm i -g yarn
 
-    - name: Instalanco dependencia
-      run: yarn
+    - name: Install dependencies
+      run: yarn install
 
-    - name: Instalanco playwright
-      run: yarn playwright install
+    - name: Install Cypress
+      run: yarn add --dev cypress
 
-    - name: testes e2e
-      run: yarn run e2e
+    - name: Run Cypress tests
+      run: npx cypress run
+      
+    - name: Run Cypress tests
+      run: npx cypress run
 
-    # - name: testes unit 
-    #   run: yarn run test
     - uses: actions/upload-artifact@v4
       if: ${{ !cancelled() }}
       with:
