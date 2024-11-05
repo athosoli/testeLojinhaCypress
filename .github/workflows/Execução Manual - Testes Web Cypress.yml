@@ -13,7 +13,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '16' # Especifique a versão do Node.js desejada
+          node-version: '16' 
 
       - name: Install dependencies
         run: yarn install
@@ -22,14 +22,13 @@ jobs:
         run: yarn add --dev cypress
 
       - name: Run Cypress tests
-        run: npx cypress run
-
+        run: |
+          npx cypress run --reporter junit --reporter-options "mochaFile=./test-report/results-[hash].xml"
         env:
-          # Variável necessária para evitar erros no GitHub Actions com o Cypress
           CYPRESS_INSTALL_BINARY: 0
-
+  
       - name: Upload do relatório de testes
-        if: success()
+        if: ${{ success() }}
         uses: actions/upload-artifact@v4
         with:
           name: relatorio-de-testes
